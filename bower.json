@@ -1,0 +1,8 @@
+{
+  "name": "purescript-rwsx-free",
+  "license": "MIT",
+  "ignore": [
+    "*",
+    "!src/**/*"
+  ]
+}
