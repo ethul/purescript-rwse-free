@@ -1,8 +1,11 @@
 {
-  "name": "purescript-rwsx-free",
+  "name": "purescript-rwse-free",
   "license": "MIT",
   "ignore": [
     "*",
     "!src/**/*"
-  ]
+  ],
+  "dependencies": {
+    "purescript-free": "~0.9.0"
+  }
 }
