@@ -1,6 +1,6 @@
 module Free.Rwse.Transformer (rwseN) where
 
-import Prelude ((<$>), const, unit)
+import Prelude ((<$>), const)
 
 import Control.Monad.Error.Class (MonadError, throwError)
 import Control.Monad.RWS.Class (MonadRWS, ask, get, put, tell)
