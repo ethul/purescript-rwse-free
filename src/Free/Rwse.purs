@@ -1,5 +1,5 @@
 module Free.Rwse
-  ( Rwse()
+  ( Rwse
   , RwseF(..)
   , ask
   , tell
@@ -9,9 +9,9 @@ module Free.Rwse
   , throw
   ) where
 
-import Prelude (Unit(), (>>=), (<<<), id, unit)
+import Prelude (Unit, (>>=), (<<<), id, unit)
 
-import Control.Monad.Free (Free(), liftF)
+import Control.Monad.Free (Free, liftF)
 
 type Rwse reader writer state error = Free (RwseF reader writer state error)
 

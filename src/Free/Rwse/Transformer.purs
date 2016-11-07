@@ -1,17 +1,16 @@
-module Free.Rwse.Transformer (rwseN) where
+module Free.Rwse.Transformer (rwse) where
 
-import Prelude ((<$>), const)
+import Prelude (type (~>), (<$>), const)
 
-import Control.Monad.Error.Class (MonadError, throwError)
-import Control.Monad.RWS.Class (MonadRWS, ask, get, put, tell)
-
-import Data.NaturalTransformation (NaturalTransformation())
+import Control.Monad.Error.Class (class MonadError, throwError)
+import Control.Monad.Reader.Class (class MonadAsk, ask)
+import Control.Monad.State.Class (class MonadState, get, put)
+import Control.Monad.Writer.Class (class MonadTell, tell)
 
 import Free.Rwse (RwseF(..))
 
-rwseN :: forall reader writer state error monad.
-         (MonadRWS reader writer state monad, MonadError error monad) => NaturalTransformation (RwseF reader writer state error) monad
-rwseN fa =
+rwse :: forall reader writer state error monad. (MonadAsk reader monad, MonadState state monad, MonadTell writer monad, MonadError error monad) => RwseF reader writer state error ~> monad
+rwse fa =
   case fa of
        Ask k -> k <$> ask
        Tell writer a -> const a <$> tell writer

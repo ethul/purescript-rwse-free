@@ -6,6 +6,7 @@
     "!src/**/*"
   ],
   "dependencies": {
-    "purescript-free": "~0.9.1"
+    "purescript-free": "^3.0.0",
+    "purescript-transformers": "^2.0.1"
   }
 }
