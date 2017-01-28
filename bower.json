@@ -5,6 +5,10 @@
     "*",
     "!src/**/*"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ethul/purescript-rwse-free.git"
+  },
   "dependencies": {
     "purescript-free": "^3.0.0",
     "purescript-transformers": "^2.0.1"
