@@ -8,5 +8,8 @@
   "dependencies": {
     "purescript-free": "^3.0.0",
     "purescript-transformers": "^2.0.1"
+  },
+  "devDependencies": {
+    "purescript-debug": "^2.0.0"
   }
 }
