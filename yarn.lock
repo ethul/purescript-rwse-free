@@ -42,7 +42,7 @@ array-unique@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/array-unique/-/array-unique-0.2.1.tgz#a1d97ccafcbc2625cc70fadceb36a50c58b01a53"
 
-async-each-series@^1.0.0, async-each-series@^1.1.0:
+async-each-series@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/async-each-series/-/async-each-series-1.1.0.tgz#f42fd8155d38f21a5b8ea07c28e063ed1700b138"
 
@@ -509,7 +509,7 @@ fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
 
-gaze@^1.0.0:
+gaze@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/gaze/-/gaze-1.1.2.tgz#847224677adb8870d679257ed3388fdb61e40105"
   dependencies:
@@ -572,7 +572,7 @@ glob@^5.0.3:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-glob@^7.0.3, glob@^7.0.5, glob@~7.1.1:
+glob@^7.0.5, glob@^7.1.1, glob@~7.1.1:
   version "7.1.1"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.1.tgz#805211df04faaf1c63a3600306cdf5ade50b2ec8"
   dependencies:
@@ -862,9 +862,9 @@ isarray@1.0.0, isarray@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/isarray/-/isarray-1.0.0.tgz#bb935d48582cba168c06834957a54a3e07124f11"
 
-isexe@^1.1.1:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/isexe/-/isexe-1.1.2.tgz#36f3e22e60750920f5e7241a476a8c6a42275ad0"
+isexe@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/isexe/-/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
 
 isobject@^2.0.0:
   version "2.1.0"
@@ -1261,21 +1261,20 @@ process-nextick-args@~1.0.6:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-1.0.7.tgz#150e20b756590ad3f91093f25a4f2ad8bff30ba3"
 
-pscid@^1.12.0:
-  version "1.12.0"
-  resolved "https://registry.yarnpkg.com/pscid/-/pscid-1.12.0.tgz#2eeadca613da4e58705374c1d321ec7fec5019fe"
+pscid@^1.0.0:
+  version "1.12.1"
+  resolved "https://registry.yarnpkg.com/pscid/-/pscid-1.12.1.tgz#4cbef8def7401eade0e56f96baff03fc19823308"
   dependencies:
-    gaze "^1.0.0"
-    glob "^7.0.3"
+    gaze "^1.1.2"
+    glob "^7.1.1"
     keypress "^0.2.1"
-    which "^1.2.8"
+    which "^1.2.12"
     yargs "^4.6.0"
 
-purescript@^0.10.5:
-  version "0.10.5"
-  resolved "https://registry.yarnpkg.com/purescript/-/purescript-0.10.5.tgz#ddb01e27d3152721e50f2b2541fec415837e09b3"
+purescript@^0.11.0:
+  version "0.11.4"
+  resolved "https://registry.yarnpkg.com/purescript/-/purescript-0.11.4.tgz#f06756499c6c9734db892123a14b3dccf3c72c84"
   dependencies:
-    async-each-series "^1.0.0"
     bin-build "^2.2.0"
     bin-wrapper "^3.0.2"
     logalot "^2.1.0"
@@ -1717,11 +1716,11 @@ which-module@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/which-module/-/which-module-1.0.0.tgz#bba63ca861948994ff307736089e3b96026c2a4f"
 
-which@^1.2.8:
-  version "1.2.12"
-  resolved "https://registry.yarnpkg.com/which/-/which-1.2.12.tgz#de67b5e450269f194909ef23ece4ebe416fa1192"
+which@^1.2.12:
+  version "1.2.14"
+  resolved "https://registry.yarnpkg.com/which/-/which-1.2.14.tgz#9a87c4378f03e827cecaf1acdf56c736c01c14e5"
   dependencies:
-    isexe "^1.1.1"
+    isexe "^2.0.0"
 
 window-size@^0.2.0:
   version "0.2.0"

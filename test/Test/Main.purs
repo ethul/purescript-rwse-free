@@ -3,12 +3,12 @@ module Test.Main where
 import Control.Alt ((<|>))
 
 import Control.Monad.Eff (Eff)
-import Control.Monad.Free (Free, hoistFree, injF, liftF, foldFree)
+import Control.Monad.Free (Free, hoistFree, liftF, foldFree)
 import Control.Monad.Except (ExceptT)
 import Control.Monad.RWS (RWST, runRWST)
 import Control.Monad.Trans.Class (class MonadTrans, lift)
 
-import Data.Inject (class Inject, prj)
+import Data.Inject (class Inject, inj, prj)
 import Data.Functor.Coproduct.Nested (Coproduct3)
 import Data.Functor.Coproduct.Nested as Coproduct
 import Data.Maybe (Maybe(..), fromJust)
@@ -58,7 +58,7 @@ baz fa = unsafePartial $ fromJust $
   rwse :: RwseF' ~> M eff
   rwse = Rwse.transRwse baz <<< unwrap
 
-injFLift :: forall t f g. (MonadTrans t, Inject f g) => Free f ~> t (Free g)
+injFLift :: forall t f g. MonadTrans t => Inject f g => Free f ~> t (Free g)
 injFLift = lift <<< injF
 
 bazThrow :: forall a. String -> Baz a
@@ -89,11 +89,14 @@ main = do
     injF foo'
     injF bar'
     bazCatch (do injF foo'
-                 bazThrow "Error"
+                 void (bazThrow "Error")
                  injF bar')
              (\error -> pure (spy error) *> injF foo')
     injF foo'
     pure unit
+
+injF :: forall f g. Inject f g => Free f ~> Free g
+injF = hoistFree inj
 
 instance injectFooFBazF :: Inject FooF BazF where
   inj = wrap <<< Coproduct.in1

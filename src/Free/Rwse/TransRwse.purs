@@ -13,12 +13,13 @@ import Free.Rwse (RwseF(..))
 
 transRwse
   :: forall f reader writer state error monad.
-     ( MonadAsk reader monad
-     , MonadState state monad
-     , MonadTell writer monad
-     , MonadError error monad
-     , MonadRec monad
-     ) => (f ~> monad) -> RwseF f reader writer state error ~> monad
+     MonadAsk reader monad =>
+     MonadState state monad =>
+     MonadTell writer monad =>
+     MonadError error monad =>
+     MonadRec monad =>
+     (f ~> monad) ->
+     RwseF f reader writer state error ~> monad
 transRwse interp fa =
   case fa of
        Ask k -> k <$> ask
