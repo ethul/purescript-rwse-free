@@ -1,6 +1,6 @@
 {
   "name": "purescript-rwse-free",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "private": true,
   "scripts": {
     "purs:compile": "purs compile 'src/**/*.purs' 'test/**/*.purs' 'bower_components/purescript-*/src/**/*.purs'",
