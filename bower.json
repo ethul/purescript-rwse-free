@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "purescript-free": "^4.0.0",
-    "purescript-transformers": "^3.0.0"
+    "purescript-transformers": "^3.0.0",
+    "purescript-aff": "^3.1.0"
   },
   "devDependencies": {
     "purescript-debug": "^3.0.0",
