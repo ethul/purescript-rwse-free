@@ -7,7 +7,6 @@ import Control.Alt ((<|>))
 import Control.Monad.Aff (launchAff, attempt)
 import Control.Monad.Aff.AVar (AVAR, AffAVar, AVar, peekVar)
 import Control.Monad.Eff (Eff)
-import Control.Monad.Free (Free, hoistFree, liftF, foldFree)
 import Control.Monad.Eff.Exception (EXCEPTION, Error)
 import Control.Monad.Eff.Exception as Exception
 import Control.Monad.Free (Free, hoistFree, liftF, foldFree)
@@ -15,7 +14,7 @@ import Control.Monad.Except (ExceptT)
 import Control.Monad.RWS (RWST, RWSResult(..), runRWST)
 import Control.Monad.Trans.Class (class MonadTrans, lift)
 
-import Data.Inject (class Inject, prj)
+import Data.Inject (class Inject, inj, prj)
 import Data.Functor.Coproduct.Nested (Coproduct3)
 import Data.Functor.Coproduct.Nested as Coproduct
 import Data.Maybe (Maybe(..), fromJust)
@@ -81,7 +80,7 @@ bazN var fa = unsafePartial $ fromJust $
   rwse :: RwseF' ~> N eff
   rwse fa' = Rwse.varRwse var (bazN var) (unwrap fa')
 
-injFLift :: forall t f g. (MonadTrans t, Inject f g) => Free f ~> t (Free g)
+injFLift :: forall t f g. MonadTrans t => Inject f g => Free f ~> t (Free g)
 injFLift = lift <<< injF
 
 bazLog :: String -> Baz Unit
@@ -102,7 +101,7 @@ bazCatch fa handler = injF catch'
   catch' :: Rwse' a
   catch' = hoistFree wrap (catch fa handler)
 
-main :: forall eff. Eff (exception :: EXCEPTION, avar :: AVAR | eff) Unit
+main :: forall eff. Eff (err :: EXCEPTION, avar :: AVAR | eff) Unit
 main = do
   RWSResult s r w <- runRWST (unwrap (foldFree bazM program)) "Reader" unit
 
@@ -139,6 +138,9 @@ main = do
              (\error -> pure (spy error) *> injF foo')
     injF foo'
     pure unit
+
+injF :: forall f g. Inject f g => Free f ~> Free g
+injF = hoistFree inj
 
 instance injectFooFBazF :: Inject FooF BazF where
   inj = wrap <<< Coproduct.in1
