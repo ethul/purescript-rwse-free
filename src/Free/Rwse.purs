@@ -10,7 +10,7 @@ module Free.Rwse
   , catch
   ) where
 
-import Prelude (Unit, (>>=), (<<<), id, unit)
+import Prelude
 
 import Control.Monad.Free (Free, liftF)
 
@@ -23,6 +23,16 @@ data RwseF f reader writer state error a
   | Put state a
   | Throw error (a -> a)
   | Catch (Free f a) (error -> Free f a) (a -> a)
+
+instance functorRwseF :: Functor f => Functor (RwseF f reader writer state error) where
+  map k =
+    case _ of
+         Ask a -> Ask (k <<< a)
+         Tell a b -> Tell a (k b)
+         Get a -> Get (k <<< a)
+         Put a b -> Put a (k b)
+         Throw a _ -> Throw a id
+         Catch a b _ -> Catch (k <$> a) (map k <<< b) id
 
 ask :: forall f reader writer state error. Rwse f reader writer state error reader
 ask = liftF (Ask id)
