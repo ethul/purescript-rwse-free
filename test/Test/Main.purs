@@ -2,8 +2,8 @@ module Test.Main where
 
 import Control.Alt ((<|>))
 
-import Control.Monad.Aff (launchAff, attempt)
-import Control.Monad.Aff.AVar (AVAR, AffAVar, AVar, peekVar)
+import Control.Monad.Aff (Aff, launchAff, attempt)
+import Control.Monad.Aff.AVar (AVAR, AVar, readVar)
 import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Exception (EXCEPTION, Error)
 import Control.Monad.Eff.Exception as Exception
@@ -48,7 +48,7 @@ data BarF a = BarF a
 
 type M eff = ExceptT Error (RWST String String Unit (Eff eff))
 
-type N eff a = AffAVar eff a
+type N eff a = Aff (avar :: AVAR | eff) a
 
 bazM :: forall eff. BazF ~> M eff
 bazM fa = unsafePartial $ fromJust $
@@ -112,7 +112,7 @@ main = do
   void $ launchAff $ do
     var <- Rwse.makeVarRwse "Reader" "" unit
     resultM <- attempt $ foldFree (bazN var) program
-    Rwse.VarRwse r' w' s' <- peekVar var
+    Rwse.VarRwse r' w' s' <- readVar var
     _ <- pure (spy ("N: " <> w'))
     pure unit
 
