@@ -6,45 +6,53 @@ module Free.Rwse.VarRwse
 
 import Prelude
 
-import Control.Monad.Aff (Aff)
-import Control.Monad.Aff.AVar (AVAR, readVar, takeVar, putVar, makeVar)
-import Control.Monad.Eff.AVar (AVar)
-import Control.Monad.Eff.Exception (Error)
 import Control.Monad.Error.Class (catchError, throwError)
 import Control.Monad.Free (foldFree)
 
+import Effect.Aff (Aff)
+import Effect.Aff.AVar (AVar)
+import Effect.Aff.AVar as AVar
+import Effect.Exception (Error)
+
 import Free.Rwse (RwseF(..))
 
-data VarRwse reader writer state = VarRwse reader writer state
+data VarRwse r w s = VarRwse r w s
 
 varRwse
-  :: forall eff f reader writer state.
-     Semigroup writer =>
-     AVar (VarRwse reader writer state) ->
-     (f ~> Aff (avar :: AVAR | eff)) ->
-     RwseF f reader writer state Error ~> Aff (avar :: AVAR | eff)
+  :: forall f r w s
+   . Semigroup w
+  => AVar (VarRwse r w s)
+  -> (f ~> Aff)
+  -> RwseF f r w s Error
+  ~> Aff
 varRwse var interp =
   case _ of
        Ask k -> do
-         VarRwse reader _ _ <- readVar var
-         pure (k reader)
+         VarRwse r _ _ <- AVar.read var
+         pure (k r)
 
        Get k -> do
-         VarRwse _ _ state <- readVar var
-         pure (k state)
+         VarRwse _ _ s <- AVar.read var
+         pure (k s)
 
-       Tell writer' a -> a <$ modifyVar (\(VarRwse reader writer state) -> VarRwse reader (writer <> writer') state)
+       Tell w' a -> a <$ modifyVar (\(VarRwse r w s) -> VarRwse r (w <> w') s)
 
-       Put state a -> a <$ modifyVar (\(VarRwse reader writer _) -> VarRwse reader writer state)
+       Put s a -> a <$ modifyVar (\(VarRwse r w _) -> VarRwse r w s)
 
-       Throw error k -> k <$> throwError error
+       Throw e k -> k <$> throwError e
 
        Catch f handle k -> k <$> catchError (foldFree interp f) (foldFree interp <<< handle)
   where
   modifyVar k = do
-    a <- takeVar var
+    a <- AVar.take var
     let a' = k a
-    putVar a' var
+    AVar.put a' var
 
-makeVarRwse :: forall eff reader writer state. reader -> writer -> state -> Aff (avar :: AVAR | eff) (AVar (VarRwse reader writer state))
-makeVarRwse reader writer state = makeVar (VarRwse reader writer state)
+makeVarRwse
+  :: forall r w s
+   . r
+  -> w
+  -> s
+  -> Aff (AVar (VarRwse r w s))
+makeVarRwse r w s =
+  AVar.new $ VarRwse r w s

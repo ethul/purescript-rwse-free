@@ -12,14 +12,15 @@ import Control.Monad.Writer.Class (class MonadTell, tell)
 import Free.Rwse (RwseF(..))
 
 transRwse
-  :: forall f reader writer state error monad.
-     MonadAsk reader monad =>
-     MonadState state monad =>
-     MonadTell writer monad =>
-     MonadError error monad =>
-     MonadRec monad =>
-     (f ~> monad) ->
-     RwseF f reader writer state error ~> monad
+  :: forall f r w s e m
+   . MonadAsk r m
+  => MonadState s m
+  => MonadTell w m
+  => MonadError e m
+  => MonadRec m
+  => (f ~> m)
+  -> RwseF f r w s e
+  ~> m
 transRwse interp fa =
   case fa of
        Ask k -> k <$> ask

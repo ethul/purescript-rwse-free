@@ -10,13 +10,13 @@
     "url": "git://github.com/ethul/purescript-rwse-free.git"
   },
   "dependencies": {
-    "purescript-free": "^4.0.0",
-    "purescript-transformers": "^3.0.0",
-    "purescript-aff": "^4.0.0"
+    "purescript-free": "^5.0.0",
+    "purescript-transformers": "^4.0.0",
+    "purescript-aff": "^5.0.0",
+    "purescript-avar": "^3.0.0"
   },
   "devDependencies": {
-    "purescript-debug": "^3.0.0",
-    "purescript-inject": "^4.0.0",
-    "purescript-functors": "^2.0.0"
+    "purescript-debug": "^4.0.0",
+    "purescript-functors": "^3.0.0"
   }
 }

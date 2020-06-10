@@ -4,12 +4,12 @@
   "private": true,
   "scripts": {
     "purs:compile": "purs compile 'src/**/*.purs' 'test/**/*.purs' 'bower_components/purescript-*/src/**/*.purs'",
-    "pscid": "pscid --output-directory output",
+    "pscid": "pscid",
     "test": "node -e 'require(\"./output/Test.Main\").main()'"
   },
   "license": "MIT",
   "devDependencies": {
     "pscid": "^2.0.2",
-    "purescript": "^0.11.6"
+    "purescript": "^0.13.0"
   }
 }
